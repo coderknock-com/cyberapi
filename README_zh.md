@@ -49,7 +49,7 @@ CyberAPI暂时仅是开发版本，业余时间的个人项目，如果有BUG或
 yarn
 ```
 
-安装tauri-clie:
+安装tauri-cli:
 
 ```shell
 cargo install tauri-cli
@@ -227,4 +227,3 @@ Cookie的数据为应用共享，在HTTP响应头中有`Set-Cookie`则会自动�
 <p align="center">
     <img src="./asset/import-editor.png" alt="import-editor">
 </p>
-
