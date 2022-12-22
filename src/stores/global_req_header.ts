@@ -1,7 +1,7 @@
-import { VariableCategory } from "../commands/variable";
-import { newVariableStore } from "./variable";
+import {VariableCategory} from "../commands/variable";
+import {newVariableStore} from "./variable";
 
 export const useGlobalReqHeaderStore = newVariableStore(
-  "globalReqHeaders",
-  VariableCategory.GlobalReqHeaders
+    "globalReqHeaders",
+    VariableCategory.GlobalReqHeaders
 );

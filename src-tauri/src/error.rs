@@ -15,6 +15,7 @@ impl From<sea_orm::DbErr> for CyberAPIError {
         }
     }
 }
+
 impl From<hyper::http::Error> for CyberAPIError {
     fn from(error: hyper::http::Error) -> Self {
         CyberAPIError {
@@ -23,6 +24,7 @@ impl From<hyper::http::Error> for CyberAPIError {
         }
     }
 }
+
 impl From<hyper::Error> for CyberAPIError {
     fn from(error: hyper::Error) -> Self {
         CyberAPIError {
@@ -31,6 +33,7 @@ impl From<hyper::Error> for CyberAPIError {
         }
     }
 }
+
 impl From<tauri::http::InvalidUri> for CyberAPIError {
     fn from(error: tauri::http::InvalidUri) -> Self {
         CyberAPIError {
@@ -39,6 +42,7 @@ impl From<tauri::http::InvalidUri> for CyberAPIError {
         }
     }
 }
+
 impl From<hyper::header::InvalidHeaderValue> for CyberAPIError {
     fn from(error: hyper::header::InvalidHeaderValue) -> Self {
         CyberAPIError {
@@ -74,6 +78,7 @@ impl From<std::io::Error> for CyberAPIError {
         }
     }
 }
+
 impl From<cookie_store::Error> for CyberAPIError {
     fn from(error: cookie_store::Error) -> Self {
         CyberAPIError {

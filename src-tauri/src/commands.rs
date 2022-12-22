@@ -1,8 +1,9 @@
+use tauri::{command, Window};
+use tauri::Manager;
+
+use crate::{cookies, http_request};
 use crate::error::CyberAPIError;
 use crate::schemas::{self, APICollection, APIFolder, APISetting, Variable};
-use crate::{cookies, http_request};
-use tauri::Manager;
-use tauri::{command, Window};
 
 pub type CommandResult<T> = Result<T, CyberAPIError>;
 
@@ -144,6 +145,7 @@ pub async fn delete_variable(ids: Vec<String>) -> CommandResult<u64> {
     let count = schemas::delete_variable(ids).await?;
     Ok(count)
 }
+
 // 获取所有变量
 #[command(async)]
 pub async fn list_variable(collection: String, category: String) -> CommandResult<Vec<Variable>> {

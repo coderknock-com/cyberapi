@@ -1,6 +1,6 @@
-import { invoke, InvokeArgs } from "@tauri-apps/api/tauri";
+import {invoke, InvokeArgs} from "@tauri-apps/api/tauri";
 import Debug from "debug";
-import { isWebMode } from "../helpers/util";
+import {isWebMode} from "../helpers/util";
 
 export const cmdInitTables = "init_tables";
 export const cmdExportTables = "export_tables";
@@ -37,21 +37,22 @@ export const cmdGetLatestVersion = "get_latest_version";
 export const cmdAddVersion = "add_version";
 
 const debug = Debug("invoke");
+
 export async function run<T>(cmd: string, args?: InvokeArgs): Promise<T> {
-  if (isWebMode()) {
-    debug("invoke, cmd:%s, args:%o", cmd, args);
-    // eslint-disable-next-line
-    // @ts-ignore: mock
-    return Promise.resolve(null);
-  }
-  try {
-    const result = await invoke<T>(cmd, args);
-    debug("invoke, result:%o", result);
-    return result;
-  } catch (err) {
-    // eslint-disable-next-line
-    // @ts-ignore: mock
-    const message = `[${err.category}]${err.message}`;
-    throw new Error(message);
-  }
+    if (isWebMode()) {
+        debug("invoke, cmd:%s, args:%o", cmd, args);
+        // eslint-disable-next-line
+        // @ts-ignore: mock
+        return Promise.resolve(null);
+    }
+    try {
+        const result = await invoke<T>(cmd, args);
+        debug("invoke, result:%o", result);
+        return result;
+    } catch (err) {
+        // eslint-disable-next-line
+        // @ts-ignore: mock
+        const message = `[${err.category}]${err.message}`;
+        throw new Error(message);
+    }
 }

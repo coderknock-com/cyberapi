@@ -1,19 +1,3 @@
-use crate::cookies;
-use crate::error::CyberAPIError;
-use hyper::{
-    body::{Buf, Bytes},
-    client::connect::HttpInfo,
-    client::HttpConnector,
-    header::{HeaderName, HeaderValue},
-    Body, Client, Method, Request, Uri,
-};
-use hyper_rustls::HttpsConnectorBuilder;
-use hyper_timeout::TimeoutConnector;
-use libflate::gzip::Decoder;
-use once_cell::sync::OnceCell;
-use tracing_subscriber::Layer;
-
-use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
     collections::HashMap,
@@ -23,7 +7,24 @@ use std::{
     time::Duration,
     vec,
 };
+
+use hyper::{
+    body::{Buf, Bytes},
+    Body,
+    Client,
+    client::connect::HttpInfo,
+    client::HttpConnector, header::{HeaderName, HeaderValue}, Method, Request, Uri,
+};
+use hyper_rustls::HttpsConnectorBuilder;
+use hyper_timeout::TimeoutConnector;
+use libflate::gzip::Decoder;
+use once_cell::sync::OnceCell;
+use serde::{Deserialize, Serialize};
+use tracing_subscriber::Layer;
 use url::Url;
+
+use crate::cookies;
+use crate::error::CyberAPIError;
 
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -305,11 +306,12 @@ impl<'a> tracing::field::Visit for JsonVisitor<'a> {
 }
 
 pub struct HTTPTraceLayer;
+
 impl<S> Layer<S> for HTTPTraceLayer
-where
-    S: tracing::Subscriber,
+    where
+        S: tracing::Subscriber,
     // Scary! But there's no need to even understand it. We just need it.
-    S: for<'lookup> tracing_subscriber::registry::LookupSpan<'lookup>,
+        S: for<'lookup> tracing_subscriber::registry::LookupSpan<'lookup>,
 {
     fn on_event(&self, event: &tracing::Event<'_>, _: tracing_subscriber::layer::Context<'_, S>) {
         let trace = get_http_trace();

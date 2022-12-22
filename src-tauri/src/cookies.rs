@@ -1,10 +1,11 @@
-use cookie_store::CookieStore;
-use once_cell::sync::OnceCell;
-use serde::{Deserialize, Serialize};
 use std::{
     fs::File, fs::OpenOptions, io::BufReader, io::BufWriter, path::Path, sync::Mutex,
     sync::MutexGuard,
 };
+
+use cookie_store::CookieStore;
+use once_cell::sync::OnceCell;
+use serde::{Deserialize, Serialize};
 use url::Url;
 
 use crate::error::CyberAPIError;

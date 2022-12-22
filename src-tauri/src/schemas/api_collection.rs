@@ -1,12 +1,13 @@
-use crate::{
-    entities::{api_collections, prelude::*},
-    error::CyberAPIError,
-};
 use chrono::Utc;
 use sea_orm::{ActiveModelTrait, DbErr, EntityTrait, Set};
 use serde::{Deserialize, Serialize};
 
-use super::database::{get_database, ExportData};
+use crate::{
+    entities::{api_collections, prelude::*},
+    error::CyberAPIError,
+};
+
+use super::database::{ExportData, get_database};
 
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -57,7 +58,7 @@ pub fn get_api_collections_create_sql() -> String {
         created_at TEXT DEFAULT '',
         updated_at TEXT DEFAULT ''
     )"
-    .to_string()
+        .to_string()
 }
 
 pub async fn add_api_collection(collection: APICollection) -> Result<APICollection, DbErr> {
@@ -67,6 +68,7 @@ pub async fn add_api_collection(collection: APICollection) -> Result<APICollecti
     let result = model.insert(&db).await?;
     Ok(result.into())
 }
+
 pub async fn update_api_collection(collection: APICollection) -> Result<APICollection, DbErr> {
     let model: api_collections::ActiveModel = collection.into_active_model();
     let db = get_database().await;

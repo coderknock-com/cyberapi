@@ -1,12 +1,13 @@
-use crate::{
-    entities::{prelude::*, variables},
-    error::CyberAPIError,
-};
 use chrono::Utc;
 use sea_orm::{ActiveModelTrait, ColumnTrait, DbErr, EntityTrait, QueryFilter, Set};
 use serde::{Deserialize, Serialize};
 
-use super::database::{get_database, ExportData};
+use crate::{
+    entities::{prelude::*, variables},
+    error::CyberAPIError,
+};
+
+use super::database::{ExportData, get_database};
 
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -43,6 +44,7 @@ impl From<variables::Model> for Variable {
         }
     }
 }
+
 impl Variable {
     fn into_active_model(self) -> variables::ActiveModel {
         let created_at = self.created_at.or_else(|| Some(Utc::now().to_rfc3339()));
@@ -71,7 +73,7 @@ pub fn get_variables_create_sql() -> String {
             created_at TEXT DEFAULT '',
             updated_at TEXT DEFAULT ''
         )"
-    .to_string()
+        .to_string()
 }
 
 pub async fn add_variable(value: Variable) -> Result<Variable, DbErr> {

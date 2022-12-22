@@ -1,55 +1,55 @@
-import { createI18n } from "vue-i18n";
-import { enUS, zhCN } from "naive-ui";
+import {createI18n} from "vue-i18n";
+import {enUS, zhCN} from "naive-ui";
 
 import en from "./en";
 import zh from "./zh";
 
 export enum LANG {
-  en = "en",
-  zh = "zh",
+    en = "en",
+    zh = "zh",
 }
 
 const i18n = createI18n({
-  locale: "en",
-  fallbackLocale: "en",
-  messages: {
-    en,
-    zh,
-  },
+    locale: "en",
+    fallbackLocale: "en",
+    messages: {
+        en,
+        zh,
+    },
 });
 export default i18n;
 
 export function getLocale() {
-  if (i18n.global.locale === LANG.zh) {
-    return zhCN;
-  }
-  return enUS;
+    if (i18n.global.locale === LANG.zh) {
+        return zhCN;
+    }
+    return enUS;
 }
 
 export function getCurrentLang() {
-  return i18n.global.locale;
+    return i18n.global.locale;
 }
 
 export function changeI18nLocale(locale: string) {
-  if (locale === LANG.zh || locale === LANG.en) {
-    i18n.global.locale = locale;
-  }
+    if (locale === LANG.zh || locale === LANG.en) {
+        i18n.global.locale = locale;
+    }
 }
 
 export function i18nGet(
-  key: string,
-  named: Record<string, unknown> = {}
+    key: string,
+    named: Record<string, unknown> = {}
 ): string {
-  return i18n.global.t(key, named);
+    return i18n.global.t(key, named);
 }
 
 export function newI18nGet(prefix: string) {
-  if (prefix[prefix.length - 1] !== ".") {
-    prefix += ".";
-  }
-  return function (key: string, named: Record<string, unknown> = {}): string {
-    return i18n.global.t(prefix + key, named);
-  };
+    if (prefix[prefix.length - 1] !== ".") {
+        prefix += ".";
+    }
+    return function (key: string, named: Record<string, unknown> = {}): string {
+        return i18n.global.t(prefix + key, named);
+    };
 }
 
 export const i18nCollection = newI18nGet("collection");

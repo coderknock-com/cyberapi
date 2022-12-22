@@ -1,7 +1,8 @@
-use crate::entities::{prelude::*, versions};
 use chrono::Utc;
 use sea_orm::{ActiveModelTrait, DbErr, EntityTrait, QueryOrder, Set};
 use serde::{Deserialize, Serialize};
+
+use crate::entities::{prelude::*, versions};
 
 use super::database::get_database;
 
@@ -36,7 +37,7 @@ pub fn get_versions_table_create_sql() -> String {
         created_at TEXT DEFAULT '',
         updated_at TEXT DEFAULT ''
     )"
-    .to_string()
+        .to_string()
 }
 
 pub async fn add_version(version: Version) -> Result<Version, DbErr> {

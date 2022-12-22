@@ -1,12 +1,14 @@
-use crate::{
-    entities::{api_settings, prelude::*},
-    error::CyberAPIError,
-};
 use chrono::Utc;
 use sea_orm::{ActiveModelTrait, ColumnTrait, DbErr, EntityTrait, QueryFilter, Set};
 use serde::{Deserialize, Serialize};
 
-use super::database::{get_database, ExportData};
+use crate::{
+    entities::{api_settings, prelude::*},
+    error::CyberAPIError,
+};
+
+use super::database::{ExportData, get_database};
+
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct APISetting {
@@ -39,6 +41,7 @@ impl From<api_settings::Model> for APISetting {
         }
     }
 }
+
 impl APISetting {
     fn into_active_model(self) -> api_settings::ActiveModel {
         let created_at = self.created_at.or_else(|| Some(Utc::now().to_rfc3339()));
@@ -65,7 +68,7 @@ pub fn get_api_settings_create_sql() -> String {
         created_at TEXT DEFAULT '',
         updated_at TEXT DEFAULT ''
     )"
-    .to_string()
+        .to_string()
 }
 
 pub async fn add_api_setting(setting: APISetting) -> Result<APISetting, DbErr> {
@@ -74,6 +77,7 @@ pub async fn add_api_setting(setting: APISetting) -> Result<APISetting, DbErr> {
     let result = model.insert(&db).await?;
     Ok(result.into())
 }
+
 pub async fn update_api_setting(setting: APISetting) -> Result<APISetting, DbErr> {
     let model = setting.into_active_model();
     let db = get_database().await;

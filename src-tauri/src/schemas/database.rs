@@ -1,15 +1,16 @@
-use crate::error::CyberAPIError;
-use chrono::Local;
-use sea_orm::{ConnectOptions, ConnectionTrait, Database, DatabaseConnection, DbErr, Statement};
+use std::{fs, fs::File, path::Path};
 use std::fs::OpenOptions;
 use std::io::{Read, Write};
 use std::time::Duration;
 use std::vec;
-use std::{fs, fs::File, path::Path};
+
+use chrono::Local;
+use sea_orm::{ConnectionTrait, ConnectOptions, Database, DatabaseConnection, DbErr, Statement};
 use tauri::api::path::download_dir;
 use tokio::sync::OnceCell;
 use zip::write::FileOptions;
 
+use crate::error::CyberAPIError;
 use crate::util;
 
 use super::api_collection::{
