@@ -9,7 +9,7 @@ pub type CommandResult<T> = Result<T, CyberAPIError>;
 
 // 关闭启动视窗切换至主视窗
 #[command]
-pub fn close_splashscreen(window: Window<R>) {
+pub fn close_splashscreen(window: Window) {
     // 关闭启动视图
     if let Some(splashscreen) = window.get_window("splashscreen") {
         splashscreen.close().unwrap();
