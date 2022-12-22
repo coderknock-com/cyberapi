@@ -61,8 +61,7 @@ cargo install tauri-cli
 yarn dev
 ```
 
-如果以APP的形式运行，则执行：
-
+如果以APP的形式运行，则执行：之前运行下 `yarn install`
 ```shell
 make dev
 ```
